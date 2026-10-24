@@ -1,0 +1,11 @@
+bin/
+hotel-server
+*.exe
+*.test
+*.out
+.env
+.idea/
+.vscode/
+*.swp
+*~
+.DS_Store

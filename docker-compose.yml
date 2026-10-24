@@ -1,0 +1,40 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: hotel_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: hotel_user
+      POSTGRES_PASSWORD: hotel_password
+      POSTGRES_DB: hotel_db
+    ports:
+      - "${POSTGRES_PORT:-5433}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hotel_user -d hotel_db"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+      start_period: 3s
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: hotel_app
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      PORT: 8080
+      DATABASE_URL: postgres://hotel_user:hotel_password@postgres:5432/hotel_db?sslmode=disable
+      JWT_SECRET: super-secret-jwt-key-hotel-notebook-minimum-32-chars
+      JWT_TTL_HOURS: 24
+      BCRYPT_COST: 12
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  pgdata:
