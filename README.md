@@ -122,3 +122,7 @@ curl -X PUT http://localhost:8080/api/v1/guests/18c8e964-b040-424a-bb13-f4a7c152
 curl -X DELETE http://localhost:8080/api/v1/guests/18c8e964-b040-424a-bb13-f4a7c152a514 \
   -H "Authorization: Bearer $TOKEN"
 ```
+
+## front
+
+расположен в submodule `hotel-test-front`

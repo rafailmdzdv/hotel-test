@@ -1,0 +1,3 @@
+[submodule "hotel-test-front"]
+	path = hotel-test-front
+	url = https://github.com/rafailmdzdv/hotel-test-front
